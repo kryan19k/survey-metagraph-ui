@@ -1,98 +1,98 @@
 import Image from "next/image";
-import { ConnectButton } from "thirdweb/react";
-import thirdwebIcon from "@public/thirdweb.svg";
 import { client } from "./client";
+import React, { useState } from 'react';
+import Head from 'next/head';
+import { motion } from 'framer-motion';
+import Spline from '@splinetool/react-spline';
 
 export default function Home() {
-  return (
-    <main className="p-4 pb-10 min-h-[100vh] flex items-center justify-center container max-w-screen-lg mx-auto">
-      <div className="py-20">
-        <Header />
+  const [isHovered, setIsHovered] = useState(false);
 
-        <div className="flex justify-center mb-20">
-          <ConnectButton
-            client={client}
-            appMetadata={{
-              name: "Example App",
-              url: "https://example.com",
-            }}
-          />
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-purple-700 via-indigo-800 to-blue-900">
+      <Head>
+        <title>SurveyChain - Decentralized Surveys</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
+      <main className="container mx-auto px-4 py-20">
+        <nav className="flex justify-between items-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-3xl font-bold text-white"
+          >
+            SurveyChain
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="space-x-4"
+          >
+            <a href="#" className="btn btn-ghost text-white">Home</a>
+            <a href="#" className="btn btn-ghost text-white">About</a>
+            <a href="#" className="btn btn-ghost text-white">Contact</a>
+          </motion.div>
+        </nav>
+
+        <div className="flex flex-col lg:flex-row items-center justify-between">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="lg:w-1/2 text-white"
+          >
+            <h1 className="text-5xl font-bold mb-6">
+              Revolutionize Your Surveys with Blockchain
+            </h1>
+            <p className="text-xl mb-8">
+              Create, participate, and earn rewards in a decentralized survey ecosystem.
+            </p>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="btn btn-primary btn-lg"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              Get Started
+            </motion.button>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+            className="lg:w-1/2 mt-12 lg:mt-0"
+          >
+            <Spline scene="https://prod.spline.design/6Yk7nFGwYEwXCfge/scene.splinecode" />
+          </motion.div>
         </div>
 
-        <ThirdwebResources />
-      </div>
-    </main>
-  );
-}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.8 }}
+          className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8"
+        >
+          {['Create', 'Participate', 'Earn'].map((item, index) => (
+            <motion.div
+              key={item}
+              whileHover={{ scale: 1.05 }}
+              className="bg-white bg-opacity-10 p-8 rounded-lg text-white text-center"
+            >
+              <h3 className="text-2xl font-bold mb-4">{item}</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam viverra justo eu nulla efficitur.</p>
+            </motion.div>
+          ))}
+        </motion.div>
+      </main>
 
-function Header() {
-  return (
-    <header className="flex flex-col items-center mb-20 md:mb-20">
-      <Image
-        src={thirdwebIcon}
-        alt=""
-        className="size-[150px] md:size-[150px]"
-        style={{
-          filter: "drop-shadow(0px 0px 24px #a726a9a8)",
-        }}
-      />
-
-      <h1 className="text-2xl md:text-6xl font-semibold md:font-bold tracking-tighter mb-6 text-zinc-100">
-        thirdweb SDK
-        <span className="text-zinc-300 inline-block mx-1"> + </span>
-        <span className="inline-block -skew-x-6 text-blue-500"> Next.js </span>
-      </h1>
-
-      <p className="text-zinc-300 text-base">
-        Read the{" "}
-        <code className="bg-zinc-800 text-zinc-300 px-2 rounded py-1 text-sm mx-1">
-          README.md
-        </code>{" "}
-        file to get started.
-      </p>
-    </header>
-  );
-}
-
-function ThirdwebResources() {
-  return (
-    <div className="grid gap-4 lg:grid-cols-3 justify-center">
-      <ArticleCard
-        title="thirdweb SDK Docs"
-        href="https://portal.thirdweb.com/typescript/v5"
-        description="thirdweb TypeScript SDK documentation"
-      />
-
-      <ArticleCard
-        title="Components and Hooks"
-        href="https://portal.thirdweb.com/typescript/v5/react"
-        description="Learn about the thirdweb React components and hooks in thirdweb SDK"
-      />
-
-      <ArticleCard
-        title="thirdweb Dashboard"
-        href="https://thirdweb.com/dashboard"
-        description="Deploy, configure, and manage your smart contracts from the dashboard."
-      />
+      <footer className="text-center py-8 text-white">
+        <p>&copy; 2024 SurveyChain. All rights reserved.</p>
+      </footer>
     </div>
-  );
-}
-
-function ArticleCard(props: {
-  title: string;
-  href: string;
-  description: string;
-}) {
-  return (
-    <a
-      href={props.href + "?utm_source=next-template"}
-      target="_blank"
-      className="flex flex-col border border-zinc-800 p-4 rounded-lg hover:bg-zinc-900 transition-colors hover:border-zinc-700"
-    >
-      <article>
-        <h2 className="text-lg font-semibold mb-2">{props.title}</h2>
-        <p className="text-sm text-zinc-400">{props.description}</p>
-      </article>
-    </a>
   );
 }
